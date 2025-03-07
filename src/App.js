@@ -1,15 +1,12 @@
-import logo from './logo.svg';
-import './App.css';
-import { useDispatch, useSelector } from 'react-redux';
-import { increaseCounter, decreaseCounter } from './redux/action/counterAction';
-import MyComponent from './components/MyComponent';
+
+import './App.scss';
 const App = () => {
-  const count = useSelector(state => state.counter.count);
-  const dispatch = useDispatch();
-
   return (
-    <MyComponent />
-  );
-}
+    <div className='app-container'>
+      Hello world
+      <button className='btn btn-primary'>test</button>
 
+    </div>
+  )
+}
 export default App;
