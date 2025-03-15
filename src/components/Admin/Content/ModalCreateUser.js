@@ -1,13 +1,26 @@
 import { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
-
+import './ManageUser.scss';
+import { FcPlus } from "react-icons/fc";
 function ModalCreateUser() {
     const [show, setShow] = useState(false);
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [name, setName] = useState("");
+    const [role, setRole] = useState("");
+    const [image, setImage] = useState("");
+    const [imagePreview, setImagePreview] = useState("");
+
+    const handleUploadImage = (event) => {
+        console.log('Uploading image');
+        setImage(event.target.files[0]);
+        setImagePreview(URL.createObjectURL(event.target.files[0]));
+    }
     return (
         <>
             <Button variant="primary" onClick={handleShow}>
@@ -19,34 +32,68 @@ function ModalCreateUser() {
                 centered
                 show={show}
                 onHide={handleClose}
-                size='xl'>
+                size='xl'
+                className='modal-manage-user'>
                 <Modal.Header closeButton>
                     <Modal.Title>Add new User</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <form class="row g-3">
-                        <div class="col-6">
-                            <label for="inputEmail4" class="form-label">Email</label>
-                            <input type="email" class="form-control" id="inputEmail4" />
+                    <form className="row g-3">
+                        <div className="col-md-6">
+                            <label htmlFor="inputEmail4" className="form-label">Email</label>
+                            <input
+                                type="email"
+                                className="form-control"
+                                id="inputEmail4"
+                                value={email}
+                                onChange={(event) => setEmail(event.target.value)} />
                         </div>
-                        <div class="col-6">
-                            <label for="inputPassword4" class="form-label">Password</label>
-                            <input type="password" class="form-control" id="inputPassword4" />
+                        <div className="col-md-6">
+                            <label htmlFor="inputPassword4" className="form-label">Password</label>
+                            <input
+                                type="password"
+                                className="form-control"
+                                id="inputPassword4"
+                                value={password}
+                                onChange={(event) => setPassword(event.target.value)} />
                         </div>
-                        <div class="col-6">
-                            <label for="inputAddress" class="form-label">Username</label>
-                            <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St" />
+                        <div className="col-md-6">
+                            <label htmlFor="inputAddress" className="form-label">Username</label>
+                            <input
+                                type="text"
+                                className="form-control"
+                                id="inputAddress"
+                                value={name}
+                                onChange={(event) => setName(event.target.value)} />
                         </div>
-                        <div class="col-md-4">
-                            <label for="inputState" class="form-label">Role</label>
-                            <select id="inputState" class="form-select">
-                                <option value={"user"} selected>USER</option>
+                        <div className="col-md-6">
+                            <label htmlFor="inputState" className="form-label">Role</label>
+                            <select
+                                id="inputState"
+                                className="form-select"
+                                value={role}
+                                onChange={(event) => setRole(event.target.value)} >
+                                <option value={"user"}>USER</option>
                                 <option value={"admin"}>ADMIN</option>
                             </select>
                         </div>
 
-                        <div class="col-6">
-                            <input type='file' class="form-control" id="inputFile"></input>
+                        <div className="col-md-12 ">
+                            <label className="form-label label-upload" htmlFor='labelUpload'><FcPlus />Upload your image</label>
+                            <input
+                                type='file'
+                                className="form-control"
+                                id='labelUpload'
+                                hidden
+                                onChange={(event) => handleUploadImage(event)} />
+                        </div>
+
+                        <div className="col-md-12 img-preview">
+                            {imagePreview ?
+                                <img src={imagePreview}></img>
+                                :
+                                <span>Preview Image</span>
+                            }
                         </div>
                     </form>
                 </Modal.Body>
