@@ -3,11 +3,18 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import './ManageUser.scss';
 import { FcPlus } from "react-icons/fc";
-function ModalCreateUser() {
-    const [show, setShow] = useState(false);
+import axios from 'axios';
+function ModalCreateUser(props) {
+    const { show, setShow } = props;
 
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
+    const handleClose = () => {
+        setShow(false);
+        setName("");
+        setEmail("");
+        setPassword("");
+        setRole("");
+        setImagePreview("");
+    };
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -21,11 +28,23 @@ function ModalCreateUser() {
         setImage(event.target.files[0]);
         setImagePreview(URL.createObjectURL(event.target.files[0]));
     }
+    const handleSubmit = async () => {
+        console.log("Image file:", image);
+
+        const formData = new FormData();
+        formData.append('username', name);
+        formData.append('email', email);
+        formData.append('password', password);
+        formData.append('role', role);
+        formData.append('userImage', image);
+        const res = await axios.post('http://localhost:8081/api/v1/participant', formData);
+        console.log(res);
+    }
     return (
         <>
-            <Button variant="primary" onClick={handleShow}>
+            {/* <Button variant="primary" onClick={handleShow}>
                 Launch demo modal
-            </Button>
+            </Button> */}
 
             <Modal
                 backdrop={'static'}
@@ -73,8 +92,8 @@ function ModalCreateUser() {
                                 className="form-select"
                                 value={role}
                                 onChange={(event) => setRole(event.target.value)} >
-                                <option value={"user"}>USER</option>
-                                <option value={"admin"}>ADMIN</option>
+                                <option value={"USER"}>USER</option>
+                                <option value={"ADMIN"}>ADMIN</option>
                             </select>
                         </div>
 
@@ -101,7 +120,7 @@ function ModalCreateUser() {
                     <Button variant="secondary" onClick={handleClose}>
                         Close
                     </Button>
-                    <Button variant="primary" onClick={handleClose}>
+                    <Button variant="primary" onClick={handleSubmit}>
                         Save Changes
                     </Button>
                 </Modal.Footer>
