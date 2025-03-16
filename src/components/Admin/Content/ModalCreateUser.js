@@ -4,6 +4,7 @@ import Modal from 'react-bootstrap/Modal';
 import './ManageUser.scss';
 import { FcPlus } from "react-icons/fc";
 import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
 function ModalCreateUser(props) {
     const { show, setShow } = props;
 
@@ -12,14 +13,14 @@ function ModalCreateUser(props) {
         setName("");
         setEmail("");
         setPassword("");
-        setRole("");
+        setRole("USER");
         setImagePreview("");
     };
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [name, setName] = useState("");
-    const [role, setRole] = useState("");
+    const [role, setRole] = useState("USER");
     const [image, setImage] = useState("");
     const [imagePreview, setImagePreview] = useState("");
 
@@ -28,9 +29,29 @@ function ModalCreateUser(props) {
         setImage(event.target.files[0]);
         setImagePreview(URL.createObjectURL(event.target.files[0]));
     }
-    const handleSubmit = async () => {
-        console.log("Image file:", image);
 
+    const validateEmail = (email) => {
+        return String(email)
+            .toLowerCase()
+            .match(
+                /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+            );
+    };
+
+    const handleSubmit = async () => {
+        const isValidateEmail = validateEmail(email);
+        if (!isValidateEmail) {
+            toast.error('Invalid email');
+            return;
+        }
+        if (!password) {
+            toast.error('Password is required');
+            return;
+        }
+        if (!name) {
+            toast.error('Name is required');
+            return;
+        }
         const formData = new FormData();
         formData.append('username', name);
         formData.append('email', email);
@@ -38,8 +59,15 @@ function ModalCreateUser(props) {
         formData.append('role', role);
         formData.append('userImage', image);
         const res = await axios.post('http://localhost:8081/api/v1/participant', formData);
-        console.log(res);
+        console.log(res.data);
+        if (res.data && res.data.EC == 0) {
+            toast.success(res.data.EM);
+            handleClose();
+        } else {
+            toast.error(res.data.EM);
+        }
     }
+
     return (
         <>
             {/* <Button variant="primary" onClick={handleShow}>
