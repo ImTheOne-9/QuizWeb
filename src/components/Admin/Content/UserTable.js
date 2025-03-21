@@ -1,20 +1,7 @@
-import { useState, useEffect } from "react";
-import { getAllUser } from "../../../Services/apiService"
+
 const UserTable = (props) => {
-    const [userList, setuserList] = useState([])
 
-    useEffect(() => {
-        fetchUsers();
-    }, []);
-
-    const fetchUsers = async () => {
-        const res = await getAllUser();
-        console.log(res);
-        if (res && res.DT) {
-            setuserList(res.DT);
-        }
-    }
-
+    const { userList, handleClickBtnUpdate, handleClickBtnView } = props;
     return (
         <>
             <table className="table table-hover table-bordered">
@@ -31,13 +18,21 @@ const UserTable = (props) => {
                     {userList && userList.length > 0 && userList.map((item, index) => {
                         return (
                             <tr key={`user-data-${index}`}>
-                                <td>{index + 1}</td>
+                                <td>{item.id}</td>
                                 <td>{item.username}</td>
                                 <td>{item.email}</td>
                                 <td>{item.role}</td>
                                 <td>
-                                    <button className="btn btn-success mx-2">Detail</button>
-                                    <button className="btn btn-primary mx-2">Edit</button>
+                                    <button
+                                        className="btn btn-success mx-2"
+                                        onClick={() => handleClickBtnView(item)}>
+                                        Detail
+                                    </button>
+                                    <button
+                                        className="btn btn-primary mx-2"
+                                        onClick={() => handleClickBtnUpdate(item)}>
+                                        Update
+                                    </button>
                                     <button className="btn btn-danger mx-2">Delete</button>
                                 </td>
                             </tr>
@@ -49,7 +44,7 @@ const UserTable = (props) => {
                         </tr>
                     )}
                 </tbody>
-            </table>
+            </table >
         </>
     )
 }
