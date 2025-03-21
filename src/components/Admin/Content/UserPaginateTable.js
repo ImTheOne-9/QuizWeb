@@ -1,7 +1,15 @@
+import ReactPaginate from "react-paginate";
+import { useState, useEffect } from "react";
 
-const UserTable = (props) => {
 
-    const { userList, handleClickBtnUpdate, handleClickBtnView, handleClickBtnDelete } = props;
+const UserPaginateTable = (props) => {
+    const { userList, pageCount, handleClickBtnView, handleClickBtnUpdate, handleClickBtnDelete } = props;
+    const handlePageClick = (event) => {
+        props.fetchUsersWithPaginate(+event.selected + 1);
+        console.log(pageCount);
+    };
+
+
     return (
         <>
             <table className="table table-hover table-bordered">
@@ -25,17 +33,20 @@ const UserTable = (props) => {
                                 <td>
                                     <button
                                         className="btn btn-success mx-2"
-                                        onClick={() => handleClickBtnView(item)}>
+                                        onClick={() => handleClickBtnView(item)}
+                                    >
                                         Detail
                                     </button>
                                     <button
                                         className="btn btn-primary mx-2"
-                                        onClick={() => handleClickBtnUpdate(item)}>
+                                        onClick={() => handleClickBtnUpdate(item)}
+                                    >
                                         Update
                                     </button>
                                     <button
                                         className="btn btn-danger mx-2"
-                                        onClick={() => handleClickBtnDelete(item)}>
+                                        onClick={() => handleClickBtnDelete(item)}
+                                    >
                                         Delete
                                     </button>
                                 </td>
@@ -49,8 +60,31 @@ const UserTable = (props) => {
                     )}
                 </tbody>
             </table >
+            <div className="user-paginate d-flex justify-content-center">
+                <ReactPaginate
+                    nextLabel="Next >"
+                    onPageChange={handlePageClick}
+                    pageRangeDisplayed={3}
+                    marginPagesDisplayed={2}
+                    pageCount={pageCount}
+                    previousLabel="< Prev"
+                    pageClassName="page-item"
+                    pageLinkClassName="page-link"
+                    previousClassName="page-item"
+                    previousLinkClassName="page-link"
+                    nextClassName="page-item"
+                    nextLinkClassName="page-link"
+                    breakLabel="..."
+                    breakClassName="page-item"
+                    breakLinkClassName="page-link"
+                    containerClassName="pagination"
+                    activeClassName="active"
+                    renderOnZeroPageCount={null}
+                />
+            </div>
+
         </>
     )
 }
 
-export default UserTable;
+export default UserPaginateTable;
