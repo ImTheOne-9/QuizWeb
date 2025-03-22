@@ -1,0 +1,72 @@
+.register-container {
+    .header {
+        height         : 50px;
+        padding        : 0 100px;
+        display        : flex;
+        align-items    : center;
+        justify-content: flex-end;
+        gap            : 15px;
+
+        button {
+            border       : 1px solid;
+            border-radius: 5px;
+            background   : #f9f9f9;
+            padding      : 3px 15px;
+
+            &:hover {
+                background-color: white;
+            }
+        }
+    }
+
+    .title {
+        font-size : 40px;
+        text-align: center;
+        margin    : 15px 0;
+    }
+
+    .welcome {
+        text-align: center;
+        font-size : 20px;
+        margin    : 15px 0;
+    }
+
+    .content-form {
+        input {
+            margin-bottom: 15px;
+            margin-top   : 3px;
+        }
+
+        .pass-group {
+            position: relative;
+
+            .icons-eye {
+                position : absolute;
+                right    : 10px;
+                top      : 30px;
+                cursor   : pointer;
+                font-size: 18px;
+            }
+        }
+
+        .forget-password {
+            text-decoration: underline;
+            cursor         : pointer;
+        }
+
+        .btn-submit {
+            width           : 100%;
+            margin          : 25px 0;
+            background-color: black;
+            color           : white;
+            border          : none;
+            height          : 50px;
+            border-radius   : 5px;
+            font-size       : 18px;
+        }
+
+        .back {
+            cursor: pointer;
+        }
+    }
+}

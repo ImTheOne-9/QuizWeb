@@ -11,6 +11,7 @@ import UserPaginateTable from "./UserPaginateTable";
 const ManageUser = (props) => {
     const USERS_LIMIT = 4;
     const [pageCount, setPageCount] = useState(0);
+    const [currentPage, setCurrentPage] = useState(1);
 
     const [showModalCreateUser, setShowModalCreateUser] = useState(false);
     const [showModalUpdateUser, setShowModalUpdateUser] = useState(false);
@@ -79,6 +80,8 @@ const ManageUser = (props) => {
                         handleClickBtnView={handleClickBtnView}
                         handleClickBtnDelete={handleClickBtnDelete}
                         fetchUsersWithPaginate={fetchUsersWithPaginate}
+                        currentPage={currentPage}
+                        setCurrentPage={setCurrentPage}
                         pageCount={pageCount} />
 
                 </div>
@@ -86,14 +89,20 @@ const ManageUser = (props) => {
             <ModalCreateUser
                 show={showModalCreateUser}
                 setShow={setShowModalCreateUser}
-                fetchUsers={fetchUsers} />
+                // fetchUsers={fetchUsers}
+                fetchUsersWithPaginate={fetchUsersWithPaginate}
+                currentPage={currentPage}
+                setCurrentPage={setCurrentPage} />
 
             <ModalUpdateUser
                 show={showModalUpdateUser}
                 setShow={setShowModalUpdateUser}
                 dataUpdate={dataUpdate}
                 setDataUpdate={setDataUpdate}
-                fetchUsers={fetchUsers} />
+                // fetchUsers={fetchUsers} 
+                fetchUsersWithPaginate={fetchUsersWithPaginate}
+                currentPage={currentPage}
+                setCurrentPage={setCurrentPage} />
 
             <ModalViewUser
                 show={showModalViewUser}
@@ -105,7 +114,10 @@ const ManageUser = (props) => {
                 show={showModalDeleteUser}
                 setShow={setShowModalDeleteUser}
                 dataDelete={dataDelete}
-                fetchUsers={fetchUsers} />
+                // fetchUsers={fetchUsers} 
+                fetchUsersWithPaginate={fetchUsersWithPaginate}
+                currentPage={currentPage}
+                setCurrentPage={setCurrentPage} />
 
         </div>
     );

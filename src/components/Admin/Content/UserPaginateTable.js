@@ -6,7 +6,7 @@ const UserPaginateTable = (props) => {
     const { userList, pageCount, handleClickBtnView, handleClickBtnUpdate, handleClickBtnDelete } = props;
     const handlePageClick = (event) => {
         props.fetchUsersWithPaginate(+event.selected + 1);
-        console.log(pageCount);
+        props.setCurrentPage(+event.selected + 1)
     };
 
 
@@ -80,6 +80,7 @@ const UserPaginateTable = (props) => {
                     containerClassName="pagination"
                     activeClassName="active"
                     renderOnZeroPageCount={null}
+                    forcePage={props.currentPage - 1}
                 />
             </div>
 
