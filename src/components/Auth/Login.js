@@ -7,7 +7,7 @@ import { useDispatch } from "react-redux";
 import { type } from "@testing-library/user-event/dist/type";
 import { doLogin } from "../../redux/action/userAction";
 import { ImSpinner9 } from "react-icons/im";
-import "nprogress/nprogress.js";
+
 const Login = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
